@@ -9,7 +9,7 @@ export default async function handler(req, res){
         match: req.body.match,
         home: req.body.home == 1 ? true : false ,
         date: new Date(req.body.date),
-        path: "/default-shirt"
+        path: req.body.path
     }
     })
     res.status(200).json({ data: "success" })
