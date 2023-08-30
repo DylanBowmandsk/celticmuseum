@@ -21,8 +21,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           </div>
             <ul className='inline-block h-100'>
               <Link href="/"><li className='inline p-5'>Home</li></Link>
-              <Link href="/admin"><li className='inline p-5'>Shirts</li></Link>
-              <li className='inline p-5'>Wanted Shirts</li>
+              <Link href="/shirts"><li className='inline p-5'>Shirts</li></Link>
+              <Link href="/admin"><li className='inline p-5'>Wanted Shirts</li></Link>
               <li className='inline p-5'>Contact</li>
             </ul>
         </nav>

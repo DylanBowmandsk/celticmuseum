@@ -1,5 +1,6 @@
 import Newest from "./components/newest";
-
+import Promo
+ from "./components/promo";
 export default function Home() {
   return (
     <main className="">
@@ -24,6 +25,7 @@ export default function Home() {
 </div>
 
       <Newest />
+      <Promo />
     </main>
 
   )

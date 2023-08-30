@@ -15,12 +15,12 @@ export default function Admin() {
     const [date, setDate] = useState<string | null>(null)
 
     interface shirt {
-        image : string
         player: string
         number : number
-        teamOne: string
+        match: string
         home : number
         date : string
+        path : string
 
     }
 
@@ -32,7 +32,6 @@ export default function Admin() {
                 setImageUrl(reader.result)
                 
             })
-            //setImageUrl(URL.createObjectURL(e.target.files[0]))
             setImage(e.target.files[0])
             reader.readAsDataURL(e.target.files[0])
         }
@@ -40,13 +39,13 @@ export default function Admin() {
 
 
     async function uploadImage() {
-        const shirt = {
-            path : imageUrl,
-            player: player,
-            number : number,
-            match: teamOne,
-            home : home,
-            date : date
+        const shirt : shirt = {
+            path : imageUrl as string,
+            player: player as string,
+            number : number as number,
+            match: teamOne as string,
+            home : home as number,
+            date : date as string
     
         }
 
@@ -81,7 +80,7 @@ export default function Admin() {
                 <input type="text" name="date" onChange={e =>  setDate(e.target.value)} className=" mb-4 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
                 <label className="mb-2 block uppercase tracking-wide text-gray-700 text-xs font-bold">Shirt Image</label>
                 <div>
-                    <Image src={imageUrl} width={100} height={100} alt="default" className='pt-2 inline'></Image>
+                    <Image src={imageUrl as string} width={100} height={100} alt="default" className='pt-2 inline'></Image>
                     <input type="file" onChange={e => {getImage(e)}} id="myFile" name="filename" className='ml-16'></input>
                 </div>
                 <button type="submit" onClick={uploadImage} className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full my-5">Submit</button>
