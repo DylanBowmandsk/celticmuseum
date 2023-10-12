@@ -17,5 +17,5 @@ model Shirt {
   match String
   home Boolean
   date DateTime
-  path Bytes
+  path String
 }
