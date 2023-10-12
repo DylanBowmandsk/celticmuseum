@@ -38,7 +38,7 @@ export default function Add() {
         }
     }
 
-
+//
     async function uploadImage() {
         const shirt : shirt = {
             player: player as string,
