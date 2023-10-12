@@ -2,6 +2,15 @@ import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient
 
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '8mb',
+            bodyParser: process.env.NODE_ENV !== 'production',
+        }
+    }
+}
+
 export default async function handler(req, res){
     const data = await prisma.shirt.create({data: {
         player: req.body.player,
