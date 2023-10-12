@@ -48,7 +48,7 @@ export default async function Shirts() {
     }
 
     return (
-        <div className=" flex px-72 py-20">
+        <div className=" flex h-screen px-72 py-20">
             {shirts.length == 0 && <div className="m-auto h-20 w-40 mt-60 text-2xl"><h1>Nothing here</h1></div>}
             {collection.map((element) =>
                 <div key={element.decade} className="mb-10">

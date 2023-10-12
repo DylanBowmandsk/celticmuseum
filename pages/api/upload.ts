@@ -11,7 +11,7 @@ export const config = {
     }
 }
 
-export default async function handler(req, res){
+export default async function POST(req, res){
     const data = await prisma.shirt.create({data: {
         player: req.body.player,
         number: parseInt(req.body.number),
