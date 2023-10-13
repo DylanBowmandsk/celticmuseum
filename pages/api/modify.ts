@@ -6,7 +6,6 @@ export const config = {
     api: {
         bodyParser: {
             sizeLimit: '8mb',
-            bodyParser: process.env.NODE_ENV !== 'production',
         }
     }
 }
