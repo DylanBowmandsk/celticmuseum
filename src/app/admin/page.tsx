@@ -4,11 +4,8 @@ import Link from "next/link";
 import Nextauth from "../../../pages/api/auth/[...nextauth]";
 import { getServerSession } from 'next-auth'
 
-export default async function Admin() {
+export default async function Admin({shirts}) {
 
-    const prisma = new PrismaClient
-
-    const shirts = await prisma.shirt.findMany()
     return(
         <div className="flex flex-col h-screen">
             <h1 className="text-4xl m-auto w-96 mt-10">Collection admin </h1>
@@ -18,3 +15,19 @@ export default async function Admin() {
         </div>
     )
 }
+
+export async function getStaticProps() {
+    const prisma = new PrismaClient
+
+    const shirts = await prisma.shirt.findMany()
+   
+    return {
+      props: {
+        shirts,
+      },
+      // Next.js will attempt to re-generate the page:
+      // - When a request comes in
+      // - At most once every 10 seconds
+      revalidate: 10, // In seconds
+    }
+  }
