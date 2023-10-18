@@ -1,17 +1,25 @@
+"use client"
 import { PrismaClient } from "@prisma/client"
 import Image from 'next/image'
+import useSWR from 'swr'
 
-const prisma = new PrismaClient
 
-export default async function Newest() {
-    const shirts = await (await prisma.shirt.findMany()).slice(-4)
+export default function Newest() {
 
+    async function fetcher (url){ 
+        const response = await fetch(url);
+        const data = response.json()
+        return data
+    }
+    const { data, error, isLoading } = useSWR('/api/get-shirt/all', fetcher)
+    if (error) return <div className='text-2xl m-auto'>Failed to load</div>
+    if (isLoading == false)
     return(
         <div className="px-72 py-20 bg-slate-100">
             <h1 className="text-3xl text-gray-700">Newest Shirts</h1>
             <div className="bg-green-600 h-1 w-56 mt-1"></div>
             <div className="flex justify-between my-10">
-            {shirts.slice().map((shirt,key) =>
+            {data.data.slice(-4).map((shirt,key) =>
                 <div key={key}>
                             <div className="h-80 w-64 relative">
                             <Image src={shirt.path.toString()} layout="fill" alt="default" className="shadow-xl hover:scale-110 transition duration-500 cursor-pointer"></Image>
@@ -30,7 +38,7 @@ export default async function Newest() {
                             </div>
                             <div>
                                 <svg width="121px" height="121px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 pb-1 inline" stroke="#00000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7" stroke="#7d7d7d" stroke-width="2" stroke-linecap="round"></path> <rect x="6" y="12" width="3" height="3" rx="0.5" fill="#7d7d7d"></rect> <rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#7d7d7d"></rect> <rect x="15" y="12" width="3" height="3" rx="0.5" fill="#7d7d7d"></rect> </g></svg>
-                                <p className="inline">{shirt.date.toLocaleDateString().slice(0,10).replace(/-/g,"/")}</p>
+                                <p className="inline">{shirt.date.slice(0,10).replace(/-/g,"/")}</p>
                             </div>
                             
                         
