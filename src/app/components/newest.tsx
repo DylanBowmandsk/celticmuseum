@@ -11,7 +11,7 @@ export default function Newest() {
         const data = response.json()
         return data
     }
-    const { data, error, isLoading } = useSWR('/api/get-shirt/all', fetcher)
+    const { data, error, isLoading } = useSWR('/api/get-shirt/latest', fetcher)
     if (error) return <div className='text-2xl m-auto'>Failed to load</div>
     if (isLoading == false)
     return(
@@ -19,7 +19,7 @@ export default function Newest() {
             <h1 className="text-3xl text-gray-700">Newest Shirts</h1>
             <div className="bg-green-600 h-1 w-56 mt-1"></div>
             <div className="flex justify-between my-10">
-            {data.data.slice(-4).map((shirt,key) =>
+            {data.data.map((shirt,key) =>
                 <div key={key}>
                             <div className="h-80 w-64 relative">
                             <Image src={shirt.path.toString()} layout="fill" alt="default" className="shadow-xl hover:scale-110 transition duration-500 cursor-pointer"></Image>

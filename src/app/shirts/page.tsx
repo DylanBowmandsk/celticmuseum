@@ -5,16 +5,10 @@ import useSWR from 'swr'
 
 export default function Shirts() {
 
-    async function fetcher (url){ 
-        const response = await fetch(url);
-        const data = await response.json()
-        return data
-    }
-    const { data, error, isLoading } = useSWR('/api/get-shirt/all', fetcher)
+    const { data, error, isLoading } = useSWR('/api/get-shirt/paginate', fetcher)
     const [collection, setCollection] = useState<any>()
     const [sorted, setSorted]= useState(false)
 
-    if(!sorted && !isLoading){
     type shirt = {
         id: string
         player: string
@@ -23,40 +17,60 @@ export default function Shirts() {
         home : number
         date : Date
         path : string
+        created: Date
 
     }
 
     type decade = {decade : number,
     shirts : shirt[]}
 
-    let decades : string[] = []
-    const collection: decade[] = []
-    for(let shirt of data.data){
-        if(!decades.includes(shirt.date.slice(0,3)+"0"))
-            decades.push(shirt.date.slice(0,3)+"0")
-    }
-    decades.sort()
-    decades.reverse()
 
-    for(const decade of decades){
-        let element : decade = {decade: parseInt(decade),
-            shirts : []}
-        for(let shirt of data.data){
-            if(shirt.date.slice(0,3)+"0" == decade)
-            element['shirts'].push({id: shirt.id,
-                player :shirt.player,
-                number: shirt.number,
-                match: shirt.match,
-                home: shirt.home == true ? 1 : 0,
-                date: shirt.date,
-                path: shirt.path.toString()
-        } )
-        }
-        collection.push(element)
-        setCollection(collection)
-        setSorted(true)
-        }
+    async function fetcher (url){ 
+        const response = await fetch(url);
+        const data = await response.json()
+        sortData(data)
+        return data
     }
+
+    function sortData(data){
+        let decades : string[] = []
+        const collection: decade[] = []
+        for(let shirt of data.data){
+            if(!decades.includes(shirt.date.slice(0,3)+"0"))
+                decades.push(shirt.date.slice(0,3)+"0")
+        }
+        decades.sort()
+        decades.reverse()
+    
+        for(const decade of decades){
+            let element : decade = {decade: parseInt(decade),
+                shirts : []}
+            for(let shirt of data.data){
+                if(shirt.date.slice(0,3)+"0" == decade)
+                element['shirts'].push({id: shirt.id,
+                    player :shirt.player,
+                    number: shirt.number,
+                    match: shirt.match,
+                    home: shirt.home == true ? 1 : 0,
+                    date: shirt.date,
+                    path: shirt.path.toString(),
+                    created: shirt.created
+            } )
+            }
+            collection.push(element)
+            setCollection(collection)
+            setSorted(true)
+            }
+    }
+
+    if(!isLoading){
+    window.onscroll = function(ev) {
+        if ((window.innerHeight + Math.round(window.scrollY + 100)) >= document.body.offsetHeight) {
+            
+        }
+    };
+}
+    
     
     if (error) return <div className='text-2xl m-auto'>Failed to load</div>
     if(isLoading) return <div className='flex flex-col h-screen px-72 py-20" text-2xl m-auto'>Loading...</div>

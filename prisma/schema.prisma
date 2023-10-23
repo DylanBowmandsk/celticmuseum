@@ -16,4 +16,5 @@ model Shirt {
   home Boolean
   date DateTime
   path String
+  created DateTime
 }

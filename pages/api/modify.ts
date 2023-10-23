@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient
+import prisma from "../../prisma/prisma"
 
 export const config = {
     api: {
@@ -11,7 +9,6 @@ export const config = {
 }
 
 export default async function handler(req, res){
-        const prisma = new PrismaClient
         const data = await prisma.shirt.update({
             where: {
               id: req.body.id,

@@ -8,7 +8,8 @@ import Footer from "./components/footer";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'The Celtic Museum'
+  title: 'The Celtic Museum',
+  description: 'The celtic museum is the home of the worlds largest collection of match worn celtic shirts',
 }
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -19,7 +20,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <meta name="description" content="The celtic museum is the home of the worlds largest collection of match worn celtic tops" />
         <link rel="icon" href="/favicon.ico" sizes="any"/>
       </head>
-      <body className={inter.className+" flex flex-col h-screen"}>
+      <body className={inter.className+" flex flex-col"}>
       <nav className='flex items-center justify-between bg-gradient-to-t from-green-800 to-green-700 text-white px-72'>
           <div>
             <Image className='inline-block' src="/celtic-logo-vector-white.png" width={100} height={100} alt='Celtic Logo'/>
@@ -32,7 +33,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             </ul>
         </nav>
         {children}
-        <div className='relative bottom w-full'>
+        <div className='relative bottom'>
         <Footer/>
         </div>
       </body>
