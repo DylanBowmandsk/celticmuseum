@@ -14,6 +14,11 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
+      <head>
+        <title>The Celtic Museum</title>
+        <meta name="description" content="The celtic museum is the home of the worlds largest collection of match worn celtic tops" />
+        <link rel="icon" href="/favicon.ico" sizes="any"/>
+      </head>
       <body className={inter.className+" flex flex-col h-screen"}>
       <nav className='flex items-center justify-between bg-gradient-to-t from-green-800 to-green-700 text-white px-72'>
           <div>

@@ -1,9 +1,20 @@
-import { PrismaClient } from "@prisma/client"
+"use client"
 import Image from 'next/image'
+import { useState } from 'react';
+import useSWR from 'swr'
 
-const prisma = new PrismaClient
+export default function Shirts() {
 
-export default async function Shirts() {
+    async function fetcher (url){ 
+        const response = await fetch(url);
+        const data = await response.json()
+        return data
+    }
+    const { data, error, isLoading } = useSWR('/api/get-shirt/all', fetcher)
+    const [collection, setCollection] = useState<any>()
+    const [sorted, setSorted]= useState(false)
+
+    if(!sorted && !isLoading){
     type shirt = {
         id: string
         player: string
@@ -18,14 +29,11 @@ export default async function Shirts() {
     type decade = {decade : number,
     shirts : shirt[]}
 
- 
-
-    const shirts = await prisma.shirt.findMany()
     let decades : string[] = []
     const collection: decade[] = []
-    for(let shirt of shirts){
-        if(!decades.includes(shirt.date.getFullYear().toString().slice(0,3)+"0"))
-            decades.push(shirt.date.getFullYear().toString().slice(0,3)+"0")
+    for(let shirt of data.data){
+        if(!decades.includes(shirt.date.slice(0,3)+"0"))
+            decades.push(shirt.date.slice(0,3)+"0")
     }
     decades.sort()
     decades.reverse()
@@ -33,8 +41,8 @@ export default async function Shirts() {
     for(const decade of decades){
         let element : decade = {decade: parseInt(decade),
             shirts : []}
-        for(let shirt of shirts){
-            if(shirt.date.getFullYear().toString().slice(0,3)+"0" == decade)
+        for(let shirt of data.data){
+            if(shirt.date.slice(0,3)+"0" == decade)
             element['shirts'].push({id: shirt.id,
                 player :shirt.player,
                 number: shirt.number,
@@ -45,13 +53,18 @@ export default async function Shirts() {
         } )
         }
         collection.push(element)
+        setCollection(collection)
+        setSorted(true)
+        console.log(collection)
     }
-
+    }
+    if (error) return <div className='text-2xl m-auto'>Failed to load</div>
+    if(isLoading) return <div className='flex flex-col h-screen px-72 py-20" text-2xl m-auto'>Loading...</div>
+    if (collection)
     return (
-        <div className=" flex h-screen px-72 py-20">
-            {shirts.length == 0 && <div className="m-auto h-20 w-40 mt-60 text-2xl"><h1>Nothing here</h1></div>}
+        <div className="flex flex-col px-72 py-20">
             {collection.map((element) =>
-                <div key={element.decade} className="mb-10">
+                <div key={element.decade} className="mb-2">
                     <h1 className="text-3xl text-gray-700">{element.decade}</h1>
                         <div className="bg-green-600 h-1 w-56 mt-1 mb-5"></div>
                     {element.shirts.map((shirt) => 
@@ -73,10 +86,8 @@ export default async function Shirts() {
                             </div>
                             <div>
                                 <svg width="121px" height="121px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 pb-1 inline" stroke="#00000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7" stroke="#7d7d7d" stroke-width="2" stroke-linecap="round"></path> <rect x="6" y="12" width="3" height="3" rx="0.5" fill="#7d7d7d"></rect> <rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#7d7d7d"></rect> <rect x="15" y="12" width="3" height="3" rx="0.5" fill="#7d7d7d"></rect> </g></svg>
-                                <p className="inline">{shirt.date.toLocaleDateString().slice(0,10).replace(/-/g,"/")}</p>
-                            </div>
-                            
-                        
+                                <p className="inline">{shirt.date.slice(0,10).replace(/-/g,"/")}</p>
+                            </div>    
                         </div> )}
                 </div>
             )}
