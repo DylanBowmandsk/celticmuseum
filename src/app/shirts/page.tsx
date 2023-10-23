@@ -55,9 +55,9 @@ export default function Shirts() {
         collection.push(element)
         setCollection(collection)
         setSorted(true)
-        console.log(collection)
+        }
     }
-    }
+    
     if (error) return <div className='text-2xl m-auto'>Failed to load</div>
     if(isLoading) return <div className='flex flex-col h-screen px-72 py-20" text-2xl m-auto'>Loading...</div>
     if (collection)
