@@ -3,6 +3,7 @@ import { match } from 'assert'
 import { imageConfigDefault } from 'next/dist/shared/lib/image-config'
 import Image from 'next/image'
 import { useState } from 'react'
+import imageCompression  from 'browser-image-compression'
 
 export default function Add() {
 
@@ -25,16 +26,27 @@ export default function Add() {
 
     }
 
-    function getImage(e) {
+    async function getImage(e) {
         if (e.target.files && e.target.files[0]){
+            const file = e.target.files[0]
+            let compressedFile
+            setImage(file)
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 350,
+                useWebWorker: true,
+              }
+              try {
+                compressedFile = await imageCompression(file, options);
+              } catch (error) {
+                console.log(error);
+              }
+            
             const reader = new FileReader();
-
             reader.addEventListener("load", () => {
                 setImageUrl(reader.result)
-                
             })
-            setImage(e.target.files[0])
-            reader.readAsDataURL(e.target.files[0])
+            reader.readAsDataURL(compressedFile)
         }
     }
 

@@ -1,4 +1,5 @@
 import prisma from "../../prisma/prisma"
+import fs from 'fs'
 
 export const config = {
     api: {
