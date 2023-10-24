@@ -1,6 +1,14 @@
 import prisma from "../../prisma/prisma"
 import fs from 'fs'
 
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '8mb',
+        }
+    }
+}
+
 export default async function POST(req, res){
     const data = await prisma.shirt.create({data: {
         player: req.body.player,
