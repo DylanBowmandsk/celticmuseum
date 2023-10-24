@@ -19,7 +19,8 @@ export default async function handler(req, res){
                 match: req.body.match.toString(),
                 home: req.body.home == 1 ? true : false ,
                 date: new Date(req.body.date),
-                path: req.body.path
+                path: req.body.path,
+                created: req.body.created
                 
             }
           })
