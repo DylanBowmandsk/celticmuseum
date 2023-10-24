@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function Promo() {
 
     return(
-        <div className="px-72 py-20">
+        <div className="px-72 py-20 bg-slate-50">
             <Image src="/celtic-logo-vector.png" width={100} height={100} alt="middle-seperator" className='mx-auto relative bottom-32'/>
             <div className='flex justify-between text-center'>
                 <div className='w-60'>

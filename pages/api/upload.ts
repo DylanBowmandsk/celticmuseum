@@ -16,7 +16,7 @@ export default async function POST(req, res){
         home: req.body.home == 1 ? true : false ,
         date: new Date(req.body.date),
         path: req.body.path,
-        created: req.body.created
+        created: new Date()
     }
     })
     res.status(200).json({ data: "success" })
