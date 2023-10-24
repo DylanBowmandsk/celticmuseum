@@ -16,7 +16,7 @@ export default function Add() {
     const [home, setHome] = useState<number | null>(null)
     const [date, setDate] = useState<string | null>(null)
 
-    interface shirt {
+    type shirt = {
         player: string
         number : number
         match: string

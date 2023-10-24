@@ -1,5 +1,4 @@
 import prisma from "../../prisma/prisma"
-import fs from 'fs'
 
 export const config = {
     api: {
@@ -10,6 +9,7 @@ export const config = {
 }
 
 export default async function POST(req, res){
+    console.log(req.body.created)
     const data = await prisma.shirt.create({data: {
         player: req.body.player,
         number: parseInt(req.body.number),

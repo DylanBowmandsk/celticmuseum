@@ -10,7 +10,7 @@ export default async function Admin() {
     const prisma = new PrismaClient
     let shirts = await prisma.shirt.findMany()
     return(
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col">
             <h1 className="text-4xl m-auto w-96 mt-10">Collection admin </h1>
             <Link href={"/admin/add"}><div className="flex justify-end"><button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-10 m-5 rounded-full">Add Shirt</button></div></Link>
             {shirts.length > 0 && <AdminTable shirts={shirts}/>}
