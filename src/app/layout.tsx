@@ -18,6 +18,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <head>
         <title>The Celtic Museum</title>
         <meta name="description" content="The celtic museum is the home of the worlds largest collection of match worn celtic tops" />
+        <meta name="google-site-verification" content="dSFyhGzo9ow_WBNzgZkeOACgbc62s2mLh85NOJRXDt4" />
         <link rel="icon" href="/favicon.ico" sizes="any"/>
       </head>
       <body className={inter.className+" flex flex-col"}>
