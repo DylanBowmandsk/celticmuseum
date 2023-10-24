@@ -6,10 +6,9 @@ export default function Login() {
     const [password, setPassword] = useState<string | null>(null)
 
     async function login(){
-      password == "impulsedental2023"? window.location.href = "../admin" : alert("invalid password")
-        /*const res = await signIn("credentials",
+        const res = await signIn("credentials",
         {password: password,redirect: false})
-       res?.ok? window.location.href = "../admin": alert("invalid password")*/
+       res?.ok? window.location.href = "../admin": alert("invalid password")
     }
 
   return (

@@ -13,7 +13,7 @@ export default async function handler(req, res){
     const index = req.query.page
         const data = await prisma.shirt.findMany({take: 20, skip:parseInt(index),
             orderBy: {    
-                date: "desc"
+                created: "desc"
             }})
     res.status(200).json({ data })
 

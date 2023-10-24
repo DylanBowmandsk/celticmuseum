@@ -40,8 +40,6 @@ export default function Shirts() {
         else{   
             let temp = fetchedData.slice()
             const joined = [...data.data, ...temp]
-            console.log(fetchedData)
-            console.log(joined)
             setFetchedData(joined)
             const sortedData = sortData(joined)
             setCollection(sortedData)
@@ -58,7 +56,6 @@ export default function Shirts() {
         }
         decades.sort()
         decades.reverse()
-    
         for(const decade of decades){
             let element : decade = {decade: parseInt(decade),
                 shirts : []}
@@ -75,19 +72,20 @@ export default function Shirts() {
             } )
             }
             collection.push(element)
-            return collection
             }
+            return collection
     }
 
     if(!isLoading){
         window.onscroll = function(ev) {
             if ((window.innerHeight + Math.round(window.scrollY + 100)) >= document.body.offsetHeight) {
-                setPageIndex(pageIndex + 1)
+                setPageIndex(pageIndex + 20)
             }
         };
     }
+
     if (error) return <div className='text-2xl m-auto'>Failed to load</div>
-    if(isLoading) return(
+    if(isLoading && fetchedData.length < 1) return(
         <div className="h-screen w-full px-72 pt-20 pb-44 bg-white-50">
             <div role="status" className='h-20 w-20 mx-auto my-40'>
                 <svg aria-hidden="true" className="inline w-20 h-20 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-green-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,9 +1,6 @@
 import AdminTable from "../components/adminTable";
 import { PrismaClient } from "@prisma/client"
 import Link from "next/link";
-import Nextauth from "../../../pages/api/auth/[...nextauth]";
-import { getServerSession } from 'next-auth'
-import useSWR from 'swr'
 
 export default async function Admin() {
 

@@ -2,27 +2,42 @@
 import Image from 'next/image'
 import { useState } from 'react';
 import useSWR from 'swr'
+import { useSession } from 'next-auth/react';
+import { SessionProvider } from 'next-auth/react';
 
-export default function AdminTable({}){
+
+export default function AdminTable(){
 
     const [filteredShirts, setFilteredShirts] = useState<shirt[]>([])
+    const [pageIndex, setPageIndex] = useState(0)
+    const [fetchedData, setFetchedData]= useState<shirt[]>([])
+    const { data, error, isLoading } = useSWR(`/api/get-shirt/paginate-admin?page=${pageIndex}`, fetcher)
 
     type shirt = {
+        id: string,
         player: string
         number : number
         match: string
         home : number
         date : Date
         path : string
+        created: Date
     }
 
     async function fetcher (url){ 
         const response = await fetch(url);
         const data = await response.json()
-        setFilteredShirts(data)
+        if(fetchedData?.length < 1){
+            setFetchedData(data.data.slice())
+        }
+        else{   
+            let temp = fetchedData.slice()
+            const joined = [ ...temp,...data.data]
+            setFetchedData(joined)
+        }
         return data
     }
-    const { data, error, isLoading } = useSWR('/api/get-shirt/all', fetcher)
+
     async function deleteShirt(id) {
         const res = await fetch("/api/delete", {
             method: "POST",
@@ -35,7 +50,7 @@ export default function AdminTable({}){
     }
     
     if (error) return <div className='text-2xl m-auto'>Failed to load</div>
-    if(isLoading) return(
+    if(isLoading && fetchedData.length < 1) return(
         <div className="h-screen w-full px-72 pt-20 pb-44 bg-white-50">
             <div role="status" className='h-20 w-20 mx-auto my-40'>
                 <svg aria-hidden="true" className="inline w-20 h-20 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-green-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +61,14 @@ export default function AdminTable({}){
             </div>
         </div>
     )
-    if (isLoading == false)
+    if(!isLoading){
+        window.onscroll = function(ev) {
+            if ((window.innerHeight + Math.round(window.scrollY + 100)) >= document.body.offsetHeight) {
+                setPageIndex(pageIndex + 20)
+            }
+        };
+    }
+    if (fetchedData)
     return(
         <div className='flex justify-center m-auto bg-slate-50'>
             <table className="table-auto mt-5 px-20">
@@ -66,10 +88,14 @@ export default function AdminTable({}){
                         <Image src={"/up-arrow.png"} onClick={() => {setFilteredShirts([].concat(data.data.sort((a,b) => a.date > b.date? 1:-1 )))}}  className="inline"width={25} height={25} alt="arrows"></Image>
                         <Image src={"/down-arrow.png"} onClick={() => {setFilteredShirts([].concat(data.data.sort((a,b) => a.date < b.date? 1:-1 )))}}  className="inline"width={25} height={25} alt="arrows"></Image>
                     </th>
+                    <th className="font-semibold text-xl">Created
+                        <Image src={"/up-arrow.png"} onClick={() => {setFilteredShirts([].concat(data.data.sort((a,b) => a.created > b.created? 1:-1 )))}}  className="inline"width={25} height={25} alt="arrows"></Image>
+                        <Image src={"/down-arrow.png"} onClick={() => {setFilteredShirts([].concat(data.data.sort((a,b) => a.created < b.created? 1:-1 )))}}  className="inline"width={25} height={25} alt="arrows"></Image>
+                    </th>
                     </tr>
                 </thead>
                 <tbody>
-                {data.data.map((shirt,key) => 
+                {fetchedData.map((shirt,key) => 
                     <tr key={key}>
                     
                         <td>
@@ -81,6 +107,7 @@ export default function AdminTable({}){
                         <td><p className="text-xl p-16 text-center">{shirt.player}</p></td>
                         <td><p className="text-xl p-16 text-center">{shirt.number}</p></td>
                         <td><p className="text-xl p-16 text-center">{new Date(shirt.date).toLocaleDateString().slice(0,10).replace(/-/g,"/")}</p></td>
+                        <td><p className="text-xl p-16 text-center">{new Date(shirt.created).toString().slice(0,21).replace(/-/g,"/")}</p></td>
                         <td><Image className='filter grayscale contrast-400 hover:filter-none' src={"/delete-icon.png"} onClick={() => deleteShirt(shirt.id)} alt="default" width={40} height={40}></Image></td>
                         <td><Image className='pb-1 ml-2 filter grayscale contrast-400 hover:filter-none' src={"/edit.png"} onClick={() => window.location.href = "admin/modify?id="+shirt.id} alt="default" width={30} height={30}></Image></td>
                     </tr>
