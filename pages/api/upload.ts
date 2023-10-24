@@ -9,7 +9,7 @@ export const config = {
 }
 
 export default async function POST(req, res){
-    console.log(req.body.created)
+    console.log(req.body)
     const data = await prisma.shirt.create({data: {
         player: req.body.player,
         number: parseInt(req.body.number),
@@ -17,7 +17,7 @@ export default async function POST(req, res){
         home: req.body.home == 1 ? true : false ,
         date: new Date(req.body.date),
         path: req.body.path,
-        created: req.body.created
+        created: new Date()
     }
     })
     res.status(200).json({ data: "success" })

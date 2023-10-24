@@ -23,8 +23,6 @@ export default function Add() {
         home : number
         date : string
         path : string
-        created : Date
-
     }
 
     async function getImage(e) {
@@ -60,7 +58,7 @@ export default function Add() {
             home : home as number,
             date : date as string,
             path : imageUrl as string,
-            created: new Date()
+
     
         }
 
