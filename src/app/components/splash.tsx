@@ -17,7 +17,7 @@ export default function Splash() {
                     <h1 className="text-5xl py-4">Looking to sell?</h1>
                     <h3 className="text-xl font-thin">Taking submissions for shirts</h3>
                     <h2 className="text-xl pt-7 pb-28 font-bold">Submit your shirt and i will offer you a fair price that suits you</h2>
-                    <button onClick={() => {window.location.href = "mailto:thecelticmuseum.mail@gmail.com?subject=The celtic museum&body=message%20goes%20here";}} className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-10 rounded-full">Sell Shirt</button>
+                    <button onClick={() => {window.location.href ="/contact"}} className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-10 rounded-full">Sell Shirt</button>
                 </div>
             </div>
         </div>
