@@ -5,17 +5,20 @@ export default function Home() {
 
     const [name, setName] = useState<string>("")
     const [subject, setSubject] = useState<string>("")
+    const [contact, setContact] = useState<string>("")
     const [message, setMessage] = useState<string>("")
 
     type email = {
-        from: string
+        name: string
+        contact: string
         subject: string
         message: string
     }
 
     async function sendMail(){
         const newMail: email = {
-            from: name,
+            name: name,
+            contact: contact,
             subject: subject,
             message: message
         }
@@ -42,6 +45,8 @@ export default function Home() {
             <form>
                 <label className="mb-2 block uppercase tracking-wide text-gray-700 text-xs font-bold">Name</label>
                 <input type="text" name="name" pattern='^[a-zA-Z ]*$' onChange={e =>  setName(e.target.value)} className="mb-4 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
+                <label className="mb-2 block uppercase tracking-wide text-gray-700 text-xs font-bold">Contact</label>
+                <input type="text" name="contact" pattern='^[a-zA-Z ]*$' onChange={e =>  setContact(e.target.value)} className="mb-4 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
                 <label className="mb-2 block uppercase tracking-wide text-gray-700 text-xs font-bold">Subject</label>
                 <input type="text" name="subject" pattern='^[a-zA-Z ]*$' onChange={e =>  setSubject(e.target.value)} className="mb-4 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
                 <label className="mb-2 block uppercase tracking-wide text-gray-700 text-xs font-bold">Message</label>

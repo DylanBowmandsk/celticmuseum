@@ -5,9 +5,10 @@ async function handler(req, res) {
     switch (method) {
       case "POST": {
         await sendMail(
-          req.body.from,
+          req.body.name,
+          req.body.contact,
           req.body.subject,
-          req.body.body
+          req.body.message
         );
         res.status(200).send("Success");
         break;
