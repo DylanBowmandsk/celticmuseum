@@ -33,7 +33,7 @@ export default function Add() {
             setImage(file)
             const options = {
                 maxSizeMB: 1,
-                maxWidthOrHeight: 350,
+                maxWidthOrHeight: 650,
                 useWebWorker: true,
               }
               try {
