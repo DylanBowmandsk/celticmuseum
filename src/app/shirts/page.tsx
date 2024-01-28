@@ -110,7 +110,7 @@ export default function Shirts() {
                         <div className="bg-green-600 h-1 w-56 mt-1 mb-5"></div>
                     {element.shirts.map((shirt) => 
                         <div key={shirt.id} className="inline-block pr-10 pb-10">
-                            <div className="h-80 w-64 relative">
+                            <div className="h-80 w-72 relative">
                             <Image src={shirt.path.toString()} layout="fill" alt="default" className="shadow-xl hover:scale-110 transition duration-500 cursor-pointer"></Image>
                             </div>
                             <div>

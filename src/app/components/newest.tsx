@@ -38,7 +38,7 @@ export default function Newest() {
             <div className="flex justify-between my-10">
             {data.data.map((shirt,key) =>
                 <div key={key}>
-                            <div className="h-80 w-64 relative">
+                            <div className="h-80 w-72 relative">
                             <Image src={shirt.path.toString()} layout="fill" alt="default" className="shadow-xl hover:scale-110 transition duration-500 cursor-pointer"></Image>
                             </div>
                             <div>
